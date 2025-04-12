@@ -16,6 +16,11 @@ WireGuard on Debian 12 with nftables
 3 Permitir trafico en el nftables
          - nano /etc/nftables.conf
 
+#!/usr/sbin/nft -f
+flush ruleset
+
+table inet filter {
+
 chain input {
                 type filter hook input priority 0; policy drop;
 
@@ -36,6 +41,7 @@ chain input {
         # WireGuard (protegido igual que SSH pero para UDP para WireGuard en el puerto 51820)
                 udp dport 51820 ct state new limit rate 10/minute counter accept
 }
+
 chain forward {
                 type filter hook forward priority 0; policy drop;
 
@@ -47,6 +53,11 @@ chain forward {
                 ip saddr 10.10.0.1 ip daddr 192.168.1.0/24 accept
 }
 
+chain output {
+                type filter hook output priority 0; policy accept;
+        }
+
+}
 Guardamos
 ###########################################################################################################
         Comprobamos el fichero:
@@ -56,6 +67,7 @@ Guardamos
 
   Arrancar el servicio para aplicar:
          - systemctl start nftables.service
+         - systemctl status nftables.service
          - systemctl enable nftables.service
 
 4 Generar la clave del servidor
@@ -112,14 +124,14 @@ ListenPort = 51820
 #SaveConfig = true
 
 [Peer]
-# Wireguard first client public key - client.pub
+# Wireguard first client public key - user.pub
 PublicKey = 3ZoaoVgHOioZnKzCrF/XALAv70V4vyJXpl/UO7AKYzA=
 # clients' VPN IP addresses you allow to connect
 # possible to specify subnet ⇒ [10.10.0.0/24]
 AllowedIPs = 10.10.0.0/24
 
 [Peer]
-# Wireguard second client public key - example.pub
+# Wireguard second client public key - user2.pub
 PublicKey = 54gyrteoagHOiozCrF/XtrLAv7V4vyJXpl/UO7AK36g=
 # clients' VPN IP addresses you allow to connect, possible to specify subnet ⇒ [10.10.0.0/24]
 AllowedIPs = 10.10.0.0/24
