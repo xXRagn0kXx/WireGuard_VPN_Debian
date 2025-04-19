@@ -56,8 +56,12 @@ chain forward {
 chain output {
                 type filter hook output priority 0; policy accept;
         }
-
+chain nat {
+        type nat hook postrouting priority 100; policy accept;
+        ip saddr 10.10.10.0/24 oifname "eth0" masquerade
+        }
 }
+
 Guardamos
 ###########################################################################################################
         Comprobamos el fichero:
@@ -127,14 +131,13 @@ ListenPort = 51820
 # Wireguard first client public key - user.pub
 PublicKey = 3ZoaoVgHOioZnKzCrF/XALAv70V4vyJXpl/UO7AKYzA=
 # clients' VPN IP addresses you allow to connect
-# possible to specify subnet ⇒ [10.10.0.0/24]
-AllowedIPs = 10.10.0.0/24
+AllowedIPs = 10.10.0.2/32
 
 [Peer]
 # Wireguard second client public key - user2.pub
 PublicKey = 54gyrteoagHOiozCrF/XtrLAv7V4vyJXpl/UO7AK36g=
-# clients' VPN IP addresses you allow to connect, possible to specify subnet ⇒ [10.10.0.0/24]
-AllowedIPs = 10.10.0.0/24
+# clients' VPN IP addresses you allow to connect
+AllowedIPs = 10.10.0.3/32
 
 
 Guardamos
