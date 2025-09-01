@@ -1,4 +1,4 @@
-WireGuard on Debian 12 with nftables
+WireGuard on Debian 13 with nftables
 
 1 Instalar paquetes
 
@@ -161,4 +161,5 @@ También puedes iniciar o detener el wireguard manualmente mediante el comando w
 
 sudo wg-quick up /etc/wireguard/wg0.conf
 sudo wg-quick down /etc/wireguard/wg0.conf
+
 
