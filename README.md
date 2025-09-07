@@ -1,4 +1,4 @@
-# WireGuard Install on Debian 13
+# WireGuard VPN Install on Debian
 
 WireGuard es una de las VPN mas eficientes que existen para linux. 
 Su sistema se basa en pares de claves(como en el SSH) lo que para nosotros seria como un "certificado".
