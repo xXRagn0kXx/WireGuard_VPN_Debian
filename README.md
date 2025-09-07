@@ -139,7 +139,7 @@ mkdir -p /etc/wireguard/clients/user
 wg genkey | tee /etc/wireguard/clients/user/user.key
 cat /etc/wireguard/clients/user/user.key | wg pubkey | tee /etc/wireguard/clients/user/user.pub
 ```
-    Comprobamos:
+Comprobamos:
 ```bash
 cat /etc/wireguard/clients/user/user.key
 cat /etc/wireguard/clients/user/user.pub
@@ -148,8 +148,10 @@ cat /etc/wireguard/clients/user/user.pub
 # 6 Crear el ficheo de configuracion del servidor 
 
 Crea una nueva configuración de Wireguard /etc/wireguard/wg0.conf
-        - sudo nano /etc/wireguard/wg0.conf
-
+```bash
+sudo nano /etc/wireguard/wg0.conf
+```
+```conf
 [Interface]
 # Wireguard Server private key - server.key
 PrivateKey = cNBb6MGaKhmgllFxSq/h9BdYfZOdyKvo8mjzb2STbW8=
@@ -173,28 +175,30 @@ AllowedIPs = 10.10.0.2/32
 PublicKey = 54gyrteoagHOiozCrF/XtrLAv7V4vyJXpl/UO7AK36g=
 # clients' VPN IP addresses you allow to connect
 AllowedIPs = 10.10.0.3/32
-
-
+```
 Guardamos
-###########################################################################################################
+---
 
-7 Gestion del servidor 
+# 7 Gestion del servidor 
 
-        Para iniciar y habilitar el servidor wireguard, ejecuta el siguiente comando systemctl.
-        Con el nombre de servicio wg-quick@wg0, iniciarás el Wireguard dentro de la interfaz wg0,
-        que se basa en la configuración /etc/wireguard/wg0.conf.
-
-        - sudo systemctl start wg-quick@wg0.service
-        - sudo systemctl enable wg-quick@wg0.service
+Para iniciar y habilitar el servidor wireguard, ejecuta el siguiente comando systemctl.
+Con el nombre de servicio wg-quick@wg0, iniciarás el Wireguard dentro de la interfaz wg0,
+que se basa en la configuración /etc/wireguard/wg0.conf.
+```bash
+sudo systemctl start wg-quick@wg0.service
+sudo systemctl enable wg-quick@wg0.service
+```
    Comprobamos:
-        - sudo systemctl status wg-quick@wg0.service
-
+```bash
+sudo systemctl status wg-quick@wg0.service
+```
 A continuación, ejecuta el siguiente comando ip para mostrar los detalles de la interfaz wg0 de wireguard. Y deberías ver que la interfaz wg0 de wireguard tiene una dirección IP 10.10.0.1.
-        - sudo ip a show wg0
-
+```bash
+sudo ip a show wg0
+```
 También puedes iniciar o detener el wireguard manualmente mediante el comando wg-quick que aparece a continuación.
 
+```bash
 sudo wg-quick up /etc/wireguard/wg0.conf
 sudo wg-quick down /etc/wireguard/wg0.conf
-
-
+```
