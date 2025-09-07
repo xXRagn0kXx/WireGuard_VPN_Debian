@@ -80,8 +80,6 @@ chain nat {
 }
 ```
 
-Guardamos
-
 :warning: (IMPORTANTE) Una vez guardado el archivo, revisa la configuracion ejecutando:
    ```bash
    sudo nft -f /etc/nftables.conf
@@ -176,8 +174,6 @@ PublicKey = 54gyrteoagHOiozCrF/XtrLAv7V4vyJXpl/UO7AK36g=
 # clients' VPN IP addresses you allow to connect
 AllowedIPs = 10.10.0.3/32
 ```
-Guardamos
----
 
 # 7 Gestion del servidor 
 
