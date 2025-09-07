@@ -92,51 +92,60 @@ Arrancar el servicio para aplicar:
 ```bash
 sudo systemctl start nftables.service
 ```
+
 Comprobamos que no tiene errores:
 ```bash
 sudo systemctl status nftables.service
 ```
+
 Habilitamos arrnque automatico:
 ```bash
 sudo systemctl enable nftables.service
 ```
+
 # 4 Generar la clave del servidor
 
-4.1 Generar la clave privada del servidor Wireguard
-        Una vez instalado el paquete wireguard, la siguiente tarea es generar los certificados del servidor,
-        lo que puede hacerse utilizando la herramienta de línea de comandos wg.
+## 4.1 Generar la clave privada del servidor Wireguard
+Una vez instalado el paquete wireguard, la siguiente tarea es generar los certificados del servidor,
+lo que puede hacerse utilizando la herramienta de línea de comandos wg.
 
-        Ejecuta el siguiente comando para generar la clave privada del servidor wireguard en /etc/wireguard/server.key
-        A continuación, cambia el permiso de la clave privada del servidor a 0400, lo que significa que deshabilitarás el acceso de escritura al archivo.
+Ejecuta el siguiente comando para generar la clave privada del servidor wireguard en /etc/wireguard/server.key
+A continuación, cambia el permiso de la clave privada del servidor a 0400, lo que significa que deshabilitarás el acceso de escritura al archivo.
+```bash
+ sudo wg genkey | sudo tee /etc/wireguard/server.key
+```
+```bash
+ sudo chmod 400 /etc/wireguard/server.key
+```
+:warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
-                - sudo wg genkey | sudo tee /etc/wireguard/server.key
-                - sudo chmod 0400 /etc/wireguard/server.key
-
-        NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
-
-4.2 A continuación, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
-
-        - sudo cat /etc/wireguard/server.key | wg pubkey | sudo tee /etc/wireguard/server.pub
-        
-        Securizamos el fichero con:
-        - sudo chmod 0400 /etc/wireguard/server.pub
-
+## 4.2 Generar la clave publica del servidor.
+A continuación, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
+```bash
+sudo cat /etc/wireguard/server.key | wg pubkey | sudo tee /etc/wireguard/server.pub
+```
+Securizamos el fichero con:
+```bash
+sudo chmod 0400 /etc/wireguard/server.pub
+```
+Comprobamos:
+```bash
+cat /etc/wireguard/server.key
+cat /etc/wireguard/server.pub
+```
+# 5 Generar la clave del cliente
+```bash
+mkdir -p /etc/wireguard/clients/user
+wg genkey | tee /etc/wireguard/clients/user/user.key
+cat /etc/wireguard/clients/user/user.key | wg pubkey | tee /etc/wireguard/clients/user/user.pub
+```
     Comprobamos:
-        - cat /etc/wireguard/server.key
-        - cat /etc/wireguard/server.pub
+```bash
+cat /etc/wireguard/clients/user/user.key
+cat /etc/wireguard/clients/user/user.pub
+```
 
-5 Generar la clave del cliente
-
-	- mkdir -p /etc/wireguard/clients/user
-        - wg genkey | tee /etc/wireguard/clients/user/user.key
-        - cat /etc/wireguard/clients/user/user.key | wg pubkey | tee /etc/wireguard/clients/user/user.pub
-
-    Comprobamos:
-        - cat /etc/wireguard/clients/user/user.key
-        - cat /etc/wireguard/clients/user/user.pub
-
-
-6 Crear el ficheo de configuracion del servidor 
+# 6 Crear el ficheo de configuracion del servidor 
 
 Crea una nueva configuración de Wireguard /etc/wireguard/wg0.conf
         - sudo nano /etc/wireguard/wg0.conf
