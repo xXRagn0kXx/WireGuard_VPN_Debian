@@ -24,7 +24,7 @@ Guardamos el archivo
 
 Aplicar con:
 ```bash
-         - sysctl -p
+sysctl -p
 ```
 
 # 3 Permitir trafico en el nftables
