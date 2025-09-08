@@ -127,12 +127,14 @@ Una vez instalado el paquete wireguard, la siguiente tarea es generar los certif
 lo que puede hacerse utilizando la herramienta de linea de comandos wg.
 
 Ejecuta el siguiente comando para generar la clave privada del servidor wireguard en /etc/wireguard/server.key
-A continuacion, cambia el permiso de la clave privada del servidor a 0400, lo que significa que deshabilitaras el acceso de escritura al archivo.
+
 ```bash
- sudo wg genkey | sudo tee /etc/wireguard/server.key
+sudo umask 077
+sudo wg genkey > server.key
 ```
+
 ```bash
- sudo chmod 400 /etc/wireguard/server.key
+sudo wg pubkey < server.key > server.pub
 ```
 :warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
