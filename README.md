@@ -113,7 +113,7 @@ sudo systemctl enable nftables.service
 ```
 :warning: Recuerda hacer "nft -f /etc/nftables.conf" cada vez que toques el fichero siempre. 
 
-# 4 Generar la clave del servidor
+# 4 Generar las claves del servidor
 En este apartado generaremos las claves necesarias para que la conexion sea posible.
 
 * WireGuard no usa usuario y contraseña
@@ -121,32 +121,40 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 * Cada clave publica se crea a partir de su privada
 * Las claves estan generadas en BASE-64
 * Habra que crear un par para el servidor y otro para cada hosts que queramos conectar
+* Asignaremos permisos restrictivos para no poder modificar las claves accidentalmente
+
+Podemos crear los 2 pares a la vez o por separado, a vez lo haremos asi:
+```bash
+cd /etc/wireguard/
+wg genkey | tee server.key | wg pubkey > server.pub
+sudo chmod 0400 /etc/wireguard/server.*
+```
+
+A continuacion desglosaremos por separado
 
 ## 4.1 Generar la clave privada del servidor Wireguard
-Una vez instalado el paquete wireguard, la siguiente tarea es generar los certificados del servidor,
-lo que puede hacerse utilizando la herramienta de linea de comandos wg.
+Una vez instalado wireguard, ahora tendremos la herrmaienta wg para crear pares de claves.
+
+El siguiente paso es generar los certificados del servidor.
+
+Esto puede hacerse utilizando la herramienta de linea de comandos wg.
 
 Ejecuta el siguiente comando para generar la clave privada del servidor wireguard en /etc/wireguard/server.key
 
 ```bash
-sudo umask 077
 sudo wg genkey > server.key
-```
-
-```bash
-sudo wg pubkey < server.key > server.pub
+sudo chmod 0400 /etc/wireguard/server.key
 ```
 :warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
 ## 4.2 Generar la clave publica del servidor.
 A continuacion, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
+
 ```bash
-sudo cat /etc/wireguard/server.key | wg pubkey | sudo tee /etc/wireguard/server.pub
-```
-Securizamos el fichero con:
-```bash
+sudo wg pubkey < server.key > server.pub
 sudo chmod 0400 /etc/wireguard/server.pub
 ```
+
 Comprobamos:
 ```bash
 cat /etc/wireguard/server.key
