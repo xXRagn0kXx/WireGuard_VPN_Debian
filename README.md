@@ -126,11 +126,11 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 Podemos crear los 2 pares a la vez o por separado, a vez lo haremos asi:
 ```bash
 cd /etc/wireguard/
-wg genkey | tee server.key | wg pubkey > server.pub
+c
 sudo chmod 0400 /etc/wireguard/server.*
 ```
 
-A continuacion desglosaremos por separado
+A continuacion desglosaremos por separado, si ya la creamos saltar al "4.3 Comprobar las claves".
 
 ## 4.1 Generar la clave privada del servidor Wireguard
 Una vez instalado wireguard, ahora tendremos la herrmaienta wg para crear pares de claves.
@@ -155,17 +155,33 @@ sudo wg pubkey < server.key > server.pub
 sudo chmod 0400 /etc/wireguard/server.pub
 ```
 
+## 4.3 Comprobar las claves
 Comprobamos que contienen las claves:
 ```bash
 cat /etc/wireguard/server.key
 cat /etc/wireguard/server.pub
 ```
+
 # 5 Generar la clave del cliente
+Como wireguard por defecto viene vacio, primero crearemos una esctructura de directorios organizada donde iremos almacenando las claves de los clientes que generemos, asi podremos administrar la VPN de forma ordenada.
+Todo los clientes penderan de la carpeta clients
+Crearemos la carpeta "clients" y luego
 ```bash
-mkdir -p /etc/wireguard/clients/user
-wg genkey | tee /etc/wireguard/clients/user/user.key
-cat /etc/wireguard/clients/user/user.key | wg pubkey | tee /etc/wireguard/clients/user/user.pub
+sudo mkdir /etc/wireguard/clients
 ```
+Dentro de la carpeta clients crearemos una por cada usuario donde se almacenaran sus claves.
+```bash
+sudo mkdir /etc/wireguard/clients/user1
+```
+Para crear las claves el procedimiento es similar a la publica pero cambiando la ruta y el nombre de los ficheros.
+
+Los metodos son los mismos: 
+
+```bash
+cd /etc/wireguard/clients/user1
+sudo wg genkey | tee user1.key | wg pubkey > user1.pub
+```
+
 Comprobamos:
 ```bash
 cat /etc/wireguard/clients/user/user.key
