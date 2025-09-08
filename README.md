@@ -116,11 +116,11 @@ sudo systemctl enable nftables.service
 # 4 Generar la clave del servidor
 En este apartado generaremos las claves necesarias para que la conexion sea posible.
 
-* WireGuard no usa usuario y contraseña.
+* WireGuard no usa usuario y contraseña
 * Funciona con pares de claves publica-privada
 * Cada clave publica se crea a partir de su privada
 * Las claves estan generadas en BASE-64
-* Habra que crear un par para el servidor y otro para cada hosts que queramos conectar.
+* Habra que crear un par para el servidor y otro para cada hosts que queramos conectar
 
 ## 4.1 Generar la clave privada del servidor Wireguard
 Una vez instalado el paquete wireguard, la siguiente tarea es generar los certificados del servidor,
