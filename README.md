@@ -56,6 +56,8 @@ chain input {
 
         # Permitir trafico en la interfaz local (loopback)
                 iifname "lo" accept
+        # WireGuard (permitir UDP para WireGuard en el puerto 51820)
+        udp dport 51820 ct state new limit rate 10/minute counter accept
 
         # Permitir ICMP (ping) - solo echo-request y echo-reply
         #        ip protocol icmp icmp type { echo-request, echo-reply } accept
@@ -65,8 +67,7 @@ chain input {
         # [Opcional] Permitir conexiones aolo SSH (puerto 22) y limitar nuevas conexiones a 10 por minuto añadiendolas a un contador
         #        tcp dport 22 ct state new tcp flags syn limit rate 4/minute counter accept
         
-        # WireGuard (protegido igual que SSH pero para UDP para WireGuard en el puerto 51820)
-                udp dport 51820 ct state new limit rate 10/minute counter accept
+
 }
 
 chain forward {
