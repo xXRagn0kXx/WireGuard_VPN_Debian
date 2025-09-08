@@ -126,7 +126,7 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 Podemos crear los 2 pares a la vez o por separado, a vez lo haremos asi:
 ```bash
 cd /etc/wireguard/
-c
+wg genkey | tee server.key | wg pubkey > server.pub
 sudo chmod 0400 /etc/wireguard/server.*
 ```
 
@@ -179,7 +179,7 @@ Los metodos son los mismos:
 
 ```bash
 cd /etc/wireguard/clients/user1
-sudo wg genkey | tee user1.key | wg pubkey > user1.pub
+ wg genkey | tee user1.key | wg pubkey > user1.pub
 ```
 
 Comprobamos:
