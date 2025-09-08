@@ -155,7 +155,7 @@ sudo wg pubkey < server.key > server.pub
 sudo chmod 0400 /etc/wireguard/server.pub
 ```
 
-Comprobamos:
+Comprobamos que contienen las claves:
 ```bash
 cat /etc/wireguard/server.key
 cat /etc/wireguard/server.pub
