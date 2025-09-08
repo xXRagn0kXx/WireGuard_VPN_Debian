@@ -118,6 +118,8 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 
 * WireGuard no usa usuario y contraseña.
 * Funciona con pares de claves publica-privada
+* Cada clave publica se crea a partir de su privada
+* Las claves estan generadas en BASE-64
 * Habra que crear un par para el servidor y otro para cada hosts que queramos conectar.
 
 ## 4.1 Generar la clave privada del servidor Wireguard
