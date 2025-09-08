@@ -2,11 +2,13 @@
 
 WireGuard es una de las VPN mas eficientes que existen para linux. 
 Su sistema se basa en pares de claves(como en el SSH) lo que para nosotros seria como un "certificado".
-En esta guia tambien se configurara su integracion con nftables, no vamos descuidar la seguridad.
+
+En esta guia tambien se configurara su integracion con nftables..
 
 ![Portada de WireGuard Install](WireGuard_Install.png)
 
 # 1 Instalar software
+Instalamos la paqueteria necesaria:
 ```bash
 sudo apt install wireguard nftables
 ```
@@ -15,23 +17,31 @@ sudo apt install wireguard nftables
 ```bash
         - nano /etc/sysctl.conf
 ```
-Descomentar ependiendo si usamos IPv4 o IPv6
+Descomentar dependiendo si usamos IPv4 o IPv6:
 ```conf
 net.ipv4.ip_forward = 1
 #net.ipv6.conf.all.forwarding=1
 ```
-Guardamos el archivo
 
-Aplicar con:
+Aplicar cambios con:
 ```bash
 sysctl -p
 ```
 
-# 3 Permitir trafico en el nftables
+# 3 Configurar nftables
+Por defecto nftables viene vacio completamente.
+
+Este fichero es el nucleo de nuestro firewall, comprenderlo nos dara un profundo conocimiento
+sobre la seguridad de nuestra maquina ya que todo pasara por aqui.
+
+Habra que especificar todos aquellos servicios que queramos permitir, se han añadido comentados algunos como el ping o el SSH.
+He creado esta estructura basica para que wireguard pueda usarlo
+
+Creamos el fichero /etc/nftables.conf:
 ```bash 
 sudo nano /etc/nftables.conf
 ```
-
+Modificar plantilla al gusto:
 ```conf
 #!/usr/sbin/nft -f
 flush ruleset
@@ -44,11 +54,11 @@ chain input {
         # Permitir conexiones ya establecidas o relacionadas
                 ct state established,related accept
 
-        # Permitir tráfico en la interfaz local (loopback)
+        # Permitir trafico en la interfaz local (loopback)
                 iifname "lo" accept
 
         # Permitir ICMP (ping) - solo echo-request y echo-reply
-                ip protocol icmp icmp type { echo-request, echo-reply } accept
+        #        ip protocol icmp icmp type { echo-request, echo-reply } accept
 
         # [Opcional] Permitir conexiones TCP (puerto 22) y limitar nuevas conexiones a 10 por minuto añadiendolas a un contador
         #       tcp dport 22 ct state new limit rate 10/minute counter accept
@@ -62,11 +72,11 @@ chain input {
 chain forward {
                 type filter hook forward priority 0; policy drop;
 
-         # Permitir tráfico entre WireGuard y la red local
+         # Permitir trafico entre WireGuard y la red local
                 iifname "wg0" oifname "enP3p49s0" accept  # Cambia "eth0" por tu interfaz LAN
                 iifname "enP3p49s0" oifname "wg0" ct state established,related accept
 
-        # Permitir tráfico específico desde 10.10.0.1 hacia 192.168.1.0/24
+        # Permitir trafico especifico desde 10.10.0.1 hacia 192.168.1.0/24
                 ip saddr 10.10.0.1 ip daddr 192.168.1.0/24 accept
 }
 
@@ -96,19 +106,25 @@ Comprobamos que no tiene errores:
 sudo systemctl status nftables.service
 ```
 
-Habilitamos arrnque automatico:
+Habilitamos arranque automaticosi todo esta correcto:
 ```bash
 sudo systemctl enable nftables.service
 ```
+:warning: Recuerda hacer "nft -f /etc/nftables.conf" cada vez que toques el fichero siempre. 
 
 # 4 Generar la clave del servidor
+En este apartado generaremos las claves necesarias para que la conexion sea posible.
+
+* WireGuard no usa usuario y contraseña.
+* Funciona con pares de claves publica-privada
+* Habra que crear un par para el servidor y otro para cada hosts que queramos conectar.
 
 ## 4.1 Generar la clave privada del servidor Wireguard
 Una vez instalado el paquete wireguard, la siguiente tarea es generar los certificados del servidor,
-lo que puede hacerse utilizando la herramienta de línea de comandos wg.
+lo que puede hacerse utilizando la herramienta de linea de comandos wg.
 
 Ejecuta el siguiente comando para generar la clave privada del servidor wireguard en /etc/wireguard/server.key
-A continuación, cambia el permiso de la clave privada del servidor a 0400, lo que significa que deshabilitarás el acceso de escritura al archivo.
+A continuacion, cambia el permiso de la clave privada del servidor a 0400, lo que significa que deshabilitaras el acceso de escritura al archivo.
 ```bash
  sudo wg genkey | sudo tee /etc/wireguard/server.key
 ```
@@ -118,7 +134,7 @@ A continuación, cambia el permiso de la clave privada del servidor a 0400, lo q
 :warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
 ## 4.2 Generar la clave publica del servidor.
-A continuación, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
+A continuacion, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
 ```bash
 sudo cat /etc/wireguard/server.key | wg pubkey | sudo tee /etc/wireguard/server.pub
 ```
@@ -145,7 +161,7 @@ cat /etc/wireguard/clients/user/user.pub
 
 # 6 Crear el ficheo de configuracion del servidor 
 
-Crea una nueva configuración de Wireguard /etc/wireguard/wg0.conf
+Crea una nueva configuracion de Wireguard /etc/wireguard/wg0.conf
 ```bash
 sudo nano /etc/wireguard/wg0.conf
 ```
@@ -178,8 +194,8 @@ AllowedIPs = 10.10.0.3/32
 # 7 Gestion del servidor 
 
 Para iniciar y habilitar el servidor wireguard, ejecuta el siguiente comando systemctl.
-Con el nombre de servicio wg-quick@wg0, iniciarás el Wireguard dentro de la interfaz wg0,
-que se basa en la configuración /etc/wireguard/wg0.conf.
+Con el nombre de servicio wg-quick@wg0, iniciaras el Wireguard dentro de la interfaz wg0,
+que se basa en la configuracion /etc/wireguard/wg0.conf.
 ```bash
 sudo systemctl start wg-quick@wg0.service
 sudo systemctl enable wg-quick@wg0.service
@@ -188,11 +204,11 @@ sudo systemctl enable wg-quick@wg0.service
 ```bash
 sudo systemctl status wg-quick@wg0.service
 ```
-A continuación, ejecuta el siguiente comando ip para mostrar los detalles de la interfaz wg0 de wireguard. Y deberías ver que la interfaz wg0 de wireguard tiene una dirección IP 10.10.0.1.
+A continuacion, ejecuta el siguiente comando ip para mostrar los detalles de la interfaz wg0 de wireguard. Y deberias ver que la interfaz wg0 de wireguard tiene una direccion IP 10.10.0.1.
 ```bash
 sudo ip a show wg0
 ```
-También puedes iniciar o detener el wireguard manualmente mediante el comando wg-quick que aparece a continuación.
+Tambien puedes iniciar o detener el wireguard manualmente mediante el comando wg-quick que aparece a continuacion.
 
 ```bash
 sudo wg-quick up /etc/wireguard/wg0.conf
