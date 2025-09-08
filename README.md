@@ -10,7 +10,7 @@ En esta guia tambien se configurara su integracion con nftables..
 # 1 Instalar software
 Instalamos la paqueteria necesaria:
 ```bash
-sudo apt install wireguard nftables
+sudo apt nftables install wireguard wireguard-tools 
 ```
 # 2 Activar redireccion de paquetes
 2 Editar el sysctl.conf para permitir redireciones de trafico a nivel kernel.
