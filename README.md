@@ -125,13 +125,11 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 
 Tenemos 2 metodos para crear los certificados, mediante script o manualmente:
 
-### 4.0.1 Certificados mediante Script
-
+ ### certificados mediante Script
 Para no alargar esta guia lo he alojado en otro repositorio.
+Para ver el script y la guía de certificados visita el repositorio de [WireGuard CertMaker Debian](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian/blob/main/README.md).
 
-Para ver el script y la guía de certificados, visita el repositorio de [WireGuard CertMaker Debian](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian/blob/main/README.md).
-
-### 4.0.2 Certificados manuales
+### Certificados manuales
 Podemos crear los 2 pares a la vez o por separado, a vez lo haremos asi:
 ```bash
 cd /etc/wireguard/
