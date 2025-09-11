@@ -123,7 +123,7 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 * Habra que crear un par para el servidor y otro para cada hosts que queramos conectar
 * Asignaremos permisos restrictivos para no poder modificar las claves accidentalmente
 
-## 4.1 Metodo automatizado o manual
+## 4.1 Metodo automatizado
 Tenemos 2 metodos para crear todos los certificados, mediante script o manualmente:
 
  ### Certificados mediante Script
