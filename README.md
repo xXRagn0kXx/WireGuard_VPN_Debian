@@ -123,14 +123,20 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 * Habra que crear un par para el servidor y otro para cada hosts que queramos conectar
 * Asignaremos permisos restrictivos para no poder modificar las claves accidentalmente
 
-Tenemos 2 metodos para crear los certificados, mediante script o manualmente:
+## 4.1 Metodo automatizado o manual
+Tenemos 2 metodos para crear todos los certificados, mediante script o manualmente:
 
- ### certificados mediante Script
+ ### Certificados mediante Script
 Para no alargar esta guia lo he alojado en otro repositorio.
-Para ver el script y la guía de certificados visita el repositorio de [WireGuard CertMaker Debian](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian/blob/main/README.md).
+* Es un Script creado por mi para facilitar la gestion diaria.
+* Permite Crear certificados del servidor y cliente
+* Comprueba correspondencia entre las claves publicas y privadas
+* Borrar certificados del servidor y cliente
+* Elimina errores manuales de gestion
 
+Para ver el script visita el repositorio de [WireGuard CertMaker Debian](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian/blob/main/README.md).
 
-## 4.1 Generar clave publica y privada del servidor
+## 4.2 Generar manualmente claves del servidor
 Podemos crear los 2 pares a la vez o por separado, a vez lo haremos asi:
 ```bash
 cd /etc/wireguard/
@@ -140,7 +146,7 @@ sudo chmod 0400 /etc/wireguard/server.*
 
 :warning: A continuacion desglosaremos por separado, si ya la creaste saltar al "4.3 Comprobar las claves".
 
-## 4.2 Generar clave privada del servidor:
+## 4.3 Generar manualmente clave privada del servidor:
 
 Una vez instalado wireguard, ahora tendremos la herrmaienta wg para crear pares de claves.
 
@@ -156,7 +162,7 @@ sudo chmod 0400 /etc/wireguard/server.key
 ```
 :warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
-## 4.2 Generar clave publica del servidor.
+## 4.2 Generar manualmente clave publica del servidor.
 A continuacion, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
 
 ```bash
@@ -171,7 +177,7 @@ cat /etc/wireguard/server.key
 cat /etc/wireguard/server.pub
 ```
 
-# 5 Generar la clave del cliente
+# 5 Generar manualmente la clave del cliente
 Como wireguard por defecto viene vacio, primero crearemos una esctructura de directorios organizada donde iremos almacenando las claves de los clientes que generemos, asi podremos administrar la VPN de forma ordenada.
 Todo los clientes penderan de la carpeta clients
 Crearemos la carpeta "clients" y luego
