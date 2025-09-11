@@ -107,7 +107,7 @@ Comprobamos que no tiene errores:
 sudo systemctl status nftables.service
 ```
 
-Habilitamos arranque automaticosi todo esta correcto:
+Habilitamos arranque automatico si todo esta correcto:
 ```bash
 sudo systemctl enable nftables.service
 ```
