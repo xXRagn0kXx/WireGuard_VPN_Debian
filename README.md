@@ -127,9 +127,9 @@ Tenemos 2 metodos para crear los certificados, mediante script o manualmente:
 
 # 4.0.1 Mediante Script
 
-Para no alargar esta guia lo he alojado en otro repositorio
-Para ver el script y la guía de certificados, visita el repositorio de
-[WireGuard CertMaker_Debian]([https://github.com/xXRagn0kXx/WireGuard_Admin_Certificates_on_Debian13/blob/main/README.md](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian)).
+Para no alargar esta guia lo he alojado en otro repositorio.
+
+Para ver el script y la guía de certificados, visita el repositorio de [WireGuard CertMaker Debian](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian/blob/main/README.md).
 
 Podemos crear los 2 pares a la vez o por separado, a vez lo haremos asi:
 ```bash
