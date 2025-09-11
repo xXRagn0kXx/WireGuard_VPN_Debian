@@ -129,7 +129,8 @@ Tenemos 2 metodos para crear los certificados, mediante script o manualmente:
 Para no alargar esta guia lo he alojado en otro repositorio.
 Para ver el script y la guía de certificados visita el repositorio de [WireGuard CertMaker Debian](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian/blob/main/README.md).
 
-### Certificados manuales
+
+## 4.1 Generar clave publica y privada del servidor
 Podemos crear los 2 pares a la vez o por separado, a vez lo haremos asi:
 ```bash
 cd /etc/wireguard/
@@ -137,9 +138,10 @@ wg genkey | tee server.key | wg pubkey > server.pub
 sudo chmod 0400 /etc/wireguard/server.*
 ```
 
-A continuacion desglosaremos por separado, si ya la creamos saltar al "4.3 Comprobar las claves".
+:warning: A continuacion desglosaremos por separado, si ya la creaste saltar al "4.3 Comprobar las claves".
 
-## 4.1 Generar la clave privada del servidor Wireguard
+## 4.2 Generar clave privada del servidor:
+
 Una vez instalado wireguard, ahora tendremos la herrmaienta wg para crear pares de claves.
 
 El siguiente paso es generar los certificados del servidor.
@@ -154,7 +156,7 @@ sudo chmod 0400 /etc/wireguard/server.key
 ```
 :warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
-## 4.2 Generar la clave publica del servidor.
+## 4.2 Generar clave publica del servidor.
 A continuacion, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
 
 ```bash
