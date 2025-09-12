@@ -235,7 +235,7 @@ PublicKey = 54gyrteoagHOiozCrF/XtrLAv7V4vyJXpl/UO7AK36g=
 AllowedIPs = 10.10.0.3/32
 ```
 
-# 7 Gestion del servidor 
+# 7 Gestion de las interfaces VPN
 
 Para iniciar y habilitar el servidor wireguard, ejecuta el siguiente comando systemctl.
 Con el nombre de servicio wg-quick@wg0, iniciaras el Wireguard dentro de la interfaz wg0,
