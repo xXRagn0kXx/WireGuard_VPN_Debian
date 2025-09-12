@@ -203,12 +203,19 @@ cat /etc/wireguard/clients/user/user.key
 cat /etc/wireguard/clients/user/user.pub
 ```
 
-# 6 Crear el ficheo de configuracion del servidor 
+# 6 Crear configuracion del servidor VPN
+Debemos tener en cuenta las siguientes reglas:
+* Cada bloque de codigo define un host
+* Estos bloques iran separados por una linea en blanco
+* Para el servidor pondremos la clave privada y la clave publica para los hosts
+* Cada host tendra definida su clave y una IP diferente /32
+* Si fallan estos pasos la VPN no funcionara correctamente
 
-Crea una nueva configuracion de Wireguard /etc/wireguard/wg0.conf
+Crea una nueva configuracion de Wireguard en /etc/wireguard/wg0.conf
 ```bash
 sudo nano /etc/wireguard/wg0.conf
 ```
+Esto es un ejemplo del servidor con 2 usuarios configurados
 ```conf
 [Interface]
 # Wireguard Server private key - server.key
@@ -258,3 +265,45 @@ Tambien puedes iniciar o detener el wireguard manualmente mediante el comando wg
 sudo wg-quick up /etc/wireguard/wg0.conf
 sudo wg-quick down /etc/wireguard/wg0.conf
 ```
+8 Cliente Debian
+
+Añadimos este paso en debian porque en windows no tiene mucha complicacion
+
+## 8.1 Instalar software cliente
+
+```bash
+sudo apt install wireguard wireguard-tools resolvconf
+```
+
+## 8.2 Crear configuracion cliente
+Recuerda crear el archivo del usuario con el nombre que quieras
+```bash
+sudo nano /etc/wireguard/usuario.conf
+```
+
+```conf
+[Interface]
+# IP del cliente dentro de la LAN VPN
+Address = 10.10.0.2/24
+# specific DNS Server
+DNS = 8.8.8.8
+
+# Clave privada del clietne usuario 
+PrivateKey = cPDg6SQHz/3l2R83lMWPzmR6/mMKnKp9PNImbtB6nGI=
+
+[Peer]
+# Public key of the Wireguard server - server.pub
+PublicKey = APyBQvTkYVm0oakzcQUQViarwx1aIYz5wb/g2v2xdUE=
+
+# Allow all traffic to be routed via Wireguard VPN
+AllowedIPs = 0.0.0.0/0
+
+# Public IP address of the Wireguard Server
+Endpoint = 192.168.128.15:51820
+
+# Sending Keepalive every 25 sec
+PersistentKeepalive = 25palive = 25
+
+```
+
+
