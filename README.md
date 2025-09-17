@@ -138,7 +138,10 @@ Para no alargar esta guia lo he alojado en otro repositorio.
 Para ver el script visita el repositorio de [WireGuard CertMaker Debian](https://github.com/xXRagn0kXx/WireGuard_CertMaker_Debian/blob/main/README.md).
 
 ## 4.2 Generar manualmente claves del servidor
-Podemos crear los 2 pares a la vez o por separado, a la vez lo haremos asi:
+Podemos crear el par de claves a la vez o por separado,
+lo haremos de todas las formas posibles para fomentar su comprension.
+
+### 4.2.1 Generar par de 1 comando
 ```bash
 cd /etc/wireguard/
 wg genkey | tee server.key | wg pubkey > server.pub
@@ -147,7 +150,7 @@ sudo chmod 0400 /etc/wireguard/server.*
 
 :warning: A continuacion desglosaremos por separado, si ya la creaste saltar al "4.3 Comprobar las claves".
 
-## 4.3 Generar manualmente clave privada del servidor:
+### 4.2.2 Generar clave privada servidor
 
 Una vez instalado wireguard, ahora tendremos la herrmaienta wg para crear pares de claves.
 
@@ -163,13 +166,14 @@ sudo chmod 0400 /etc/wireguard/server.key
 ```
 :warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
-## 4.2 Generar manualmente clave publica del servidor.
+### 4.2.3 Generar clave publica del servidor.
 A continuacion, ejecuta el siguiente comando para generar la clave pública del servidor wireguard en /etc/wireguard/server.pub.
 
 ```bash
 sudo wg pubkey < server.key > server.pub
 sudo chmod 0400 /etc/wireguard/server.pub
 ```
+:warning: NOTA: Para modificar ese fichero de nuevo habra que volver a modificarle los permisos antes de editar.
 
 ## 4.3 Comprobar las claves
 Comprobamos que contienen las claves:
