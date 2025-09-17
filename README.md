@@ -148,7 +148,7 @@ wg genkey | tee server.key | wg pubkey > server.pub
 sudo chmod 0400 /etc/wireguard/server.*
 ```
 
-:warning: A continuacion desglosaremos por separado, si ya la creaste saltar al "4.3 Comprobar las claves".
+:scroll: A continuacion desglosaremos por separado, si ya la creaste saltar al "4.3 Comprobar las claves".
 
 ### 4.2.2 Generar clave privada servidor
 
