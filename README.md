@@ -32,7 +32,7 @@ sysctl -p
 Por defecto nftables viene vacio completamente.
 
 Este fichero es el nucleo de nuestro firewall, comprenderlo nos dara un profundo conocimiento
-sobre la seguridad de nuestra maquina ya que todo pasara por aqui.
+sobre la seguridad y el comportamiento de nuestra maquina ya que todo pasara por aqui.
 
 Habra que especificar todos aquellos servicios que queramos permitir, se han añadido comentados algunos como el ping o el SSH.
 He creado esta estructura basica para que wireguard pueda usarlo
@@ -120,8 +120,9 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 * Funciona con pares de claves publica-privada
 * Cada clave publica se crea a partir de su privada
 * Las claves estan generadas en BASE-64
-* Habra que crear un par para el servidor y otro para cada hosts que queramos conectar
+* Habra que crear un par para el servidor y otro para cada host que queramos conectar
 * Asignaremos permisos restrictivos para no poder modificar las claves accidentalmente
+* A diferencia de otras VPN, cualquiera puede ser servidor y cliente.
 
 ## 4.1 Metodo automatizado
 Tenemos 2 metodos para crear todos los certificados, mediante script o manualmente:
