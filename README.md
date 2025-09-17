@@ -8,7 +8,7 @@ En esta guia tambien se configurara su integracion con nftables..
 ![Portada de WireGuard Install](WireGuard_Install.png)
 
 # 1 Instalar software
-Instalamos la paqueteria necesaria:
+Instalamos el software necesario:
 ```bash
 sudo apt install nftables install wireguard wireguard-tools 
 ```
