@@ -13,7 +13,7 @@ Instalamos la paqueteria necesaria:
 sudo apt install nftables install wireguard wireguard-tools 
 ```
 # 2 Activar redireccion de paquetes
-2 Editar el sysctl.conf para permitir redireciones de trafico a nivel kernel.
+Editar el sysctl.conf para permitir redireciones de trafico a nivel kernel.
 ```bash
         - nano /etc/sysctl.conf
 ```
