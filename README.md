@@ -127,7 +127,7 @@ En este apartado generaremos las claves necesarias para que la conexion sea posi
 ## 4.1 Metodo automatizado
 Tenemos 2 metodos para crear todos los certificados, mediante script o manualmente:
 
- ### Certificados mediante Script
+### Certificados mediante Script
 Para no alargar esta guia lo he alojado en otro repositorio.
 * Es un Script creado por mi para facilitar la gestion diaria.
 * Permite Crear certificados del servidor y cliente
