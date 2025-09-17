@@ -23,7 +23,7 @@ net.ipv4.ip_forward = 1
 #net.ipv6.conf.all.forwarding=1
 ```
 
-Aplicar cambios con:
+Una vez guardado, aplicar cambios con:
 ```bash
 sysctl -p
 ```
