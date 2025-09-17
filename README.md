@@ -184,8 +184,9 @@ cat /etc/wireguard/server.pub
 
 # 5 Generar manualmente la clave del cliente
 Como wireguard por defecto viene vacio, primero crearemos una esctructura de directorios organizada donde iremos almacenando las claves de los clientes que generemos, asi podremos administrar la VPN de forma ordenada.
-Todo los clientes penderan de la carpeta clients
-Crearemos la carpeta "clients" y luego
+
+Todos los clientes penderan de la carpeta clients
+Creamos la carpeta clients
 ```bash
 sudo mkdir /etc/wireguard/clients
 ```
