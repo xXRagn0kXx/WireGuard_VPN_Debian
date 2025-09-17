@@ -265,7 +265,7 @@ Tambien puedes iniciar o detener el wireguard manualmente mediante el comando wg
 sudo wg-quick up /etc/wireguard/wg0.conf
 sudo wg-quick down /etc/wireguard/wg0.conf
 ```
-8 Cliente Debian
+# 8 Clientes Debian
 
 Añadimos este paso en debian porque en windows no tiene mucha complicacion
 
